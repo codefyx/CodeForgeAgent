@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CodeForge Agent</string>
+    <string name="app_tagline">Your on-device AI coding companion</string>
+    <string name="disclaimer">Independent open-source AI coding client. Not affiliated with or endorsed by any third-party AI provider.</string>
+</resources>
