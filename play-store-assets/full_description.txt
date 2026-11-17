@@ -1,0 +1,16 @@
+CodeForge Agent is an independent open-source AI coding client for Android. It brings an agentic coding workflow to your phone or tablet: chat with 200+ LLMs, run shell commands, edit files, manage Git repositories, and connect to MCP and LSP servers.
+
+Features:
+- Plan and Build agent modes
+- Multi-provider LLM routing (OpenAI, Anthropic, Gemini, Ollama, and more)
+- On-device sandboxed workspace via Storage Access Framework
+- Remote server / SSH companion mode
+- Full terminal emulator with accessory keyboard
+- Git status, diff, commit, branch
+- Atomic undo/redo via shadow commits
+- MCP client (stdio + HTTP/SSE)
+- LSP diagnostics
+- Custom slash commands and skills
+- Encrypted API key storage in Android Keystore
+
+Independent open-source AI coding client. Not affiliated with or endorsed by any third-party AI provider.

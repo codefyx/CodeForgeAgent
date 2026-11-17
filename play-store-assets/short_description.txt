@@ -1,0 +1,1 @@
+On-device AI coding agent with terminal, Git, and multi-provider LLM support.

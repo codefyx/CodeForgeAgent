@@ -1,0 +1,3 @@
+# Privacy Policy
+
+CodeForge Agent stores all data locally on your device. API keys and OAuth tokens are stored in Android Keystore-backed EncryptedSharedPreferences. Network requests are sent directly from your device to the LLM provider you configure; CodeForge Agent does not proxy or collect your prompts, code, or credentials. No analytics or tracking SDKs are included. Workspace files are accessed only via the Storage Access Framework folders you explicitly open.
