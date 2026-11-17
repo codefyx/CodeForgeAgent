@@ -1,0 +1,22 @@
+# Gradle
+.gradle/
+build/
+*/build/
+local.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Keystores
+*.jks
+*.keystore
+
+# Secrets
+*.env
+secrets/
+
+# OS
+.DS_Store
+Thumbs.db
