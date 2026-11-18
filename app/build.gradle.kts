@@ -9,11 +9,12 @@ plugins {
 android {
     namespace = "com.codeforge.agent"
     compileSdk = 36
+    ndkVersion = "27.0.12077973"
 
     defaultConfig {
         applicationId = "com.codeforge.agent"
-        minSdk = 26
-        targetSdk = 35
+        minSdk = 28
+        targetSdk = 28
         versionCode = 1
         versionName = "1.0.0"
 
@@ -23,7 +24,7 @@ android {
         }
 
         ndk {
-            abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64")
+            abiFilters += listOf("arm64-v8a")
         }
 
         externalNativeBuild {
@@ -32,13 +33,14 @@ android {
                 arguments += "-DANDROID_STL=c++_shared"
             }
         }
-    }
 
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
-        }
+        buildConfigField("boolean", "IS_PLAY_BUILD", "false")
+        buildConfigField("boolean", "OFFLINE_RUNTIME_BUNDLES", "false")
+        buildConfigField("String", "RUNTIME_RELEASE_BASE_URL", "\"https://github.com/techjarves/Mobile-Harness/releases/download/runtime-2026.09.4\"")
+        buildConfigField("String", "APP_UPDATE_MANIFEST_URL", "\"https://github.com/techjarves/Mobile-Harness/releases/latest/download/mobile-harness-update.json\"")
+        buildConfigField("String", "APP_VARIANT", "\"online\"")
+        buildConfigField("String", "PRIVACY_POLICY_URL", "\"https://github.com/techjarves/Mobile-Harness/blob/main/PRIVACY.md\"")
+        buildConfigField("String", "TEST_OPENROUTER_API_KEY", "\"\"")
     }
 
     signingConfigs {
@@ -80,10 +82,22 @@ android {
         compose = true
         buildConfig = true
     }
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
+        }
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+    androidResources {
+        noCompress += "zst"
     }
     testOptions {
         unitTests.isIncludeAndroidResources = true
@@ -94,13 +108,15 @@ dependencies {
     // Core Android
     implementation("androidx.core:core-ktx:1.15.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+    implementation("androidx.activity:activity-compose:1.10.0")
     implementation("androidx.navigation:navigation-compose:2.8.5")
     implementation("androidx.work:work-runtime-ktx:2.10.0")
 
     // Compose BOM
-    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
+    val composeBom = platform("androidx.compose:compose-bom:2025.02.00")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
@@ -135,7 +151,9 @@ dependencies {
     implementation("org.slf4j:slf4j-api:2.0.16")
     implementation("org.slf4j:slf4j-nop:2.0.16")
 
-    // Markdown rendering (optional; rendering handled by Compose Text for now)
+    // MH runtime deps
+    implementation("org.apache.commons:commons-compress:1.27.1")
+    implementation("com.github.luben:zstd-jni:1.5.7-12@aar")
 
     // QR code
     implementation("com.google.zxing:core:3.5.3")
@@ -148,6 +166,7 @@ dependencies {
     testImplementation("app.cash.turbine:turbine:1.2.0")
     testImplementation("androidx.room:room-testing:2.6.1")
     testImplementation("com.google.truth:truth:1.4.4")
+    // org.json not available offline; omitted
 
     androidTestImplementation(composeBom)
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
